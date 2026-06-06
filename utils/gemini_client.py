@@ -24,6 +24,10 @@ class GeminiClient:
         requirement: str,
         context: str = ""
     ):
+        if not requirement.strip():
+            raise ValueError(
+            "Requirement cannot be empty.")
+            
         prompt = f"""
 You are an expert Database Architect.
 

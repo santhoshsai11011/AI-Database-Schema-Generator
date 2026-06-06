@@ -1,5 +1,6 @@
 import streamlit as st
-from utils.gemini_client import GeminiClient
+from rag.rag_chain import RAGSchemaGenerator
+from schema.sql_generator import SQLGenerator
 
 st.set_page_config(
     page_title="AI Database Schema Generator",
@@ -62,7 +63,7 @@ section[data-testid="stSidebar"] {
 #Gemini Client Initialization
 
 try:
-    gemini_client = GeminiClient()
+    rag_generator = RAGSchemaGenerator()
 except Exception as e:
     st.error(str(e))
     st.stop()
@@ -178,21 +179,25 @@ if generate:
             try:
 
                 response = (
-                    gemini_client
-                    .generate_schema_response(
-                        user_input
+                    rag_generator.generate_schema(
+                    user_input
+                )
+            )
+
+                sql_schema = (
+                    SQLGenerator.generate(
+                        response
                     )
                 )
 
                 schema_output.json(response)
 
-                sql_output.info(
-                    "SQL generation will be added in a later step."
-                )
+                sql_output.code(
+                sql_schema,
+                language="sql")
 
                 diagram_output.info(
-                    "ER Diagram generation will be added in a later step."
-                )
+                        "ER Diagram generation will be added in a later step.")
 
             except Exception as e:
 
