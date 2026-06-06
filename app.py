@@ -1,6 +1,7 @@
 import streamlit as st
 from rag.rag_chain import RAGSchemaGenerator
 from schema.sql_generator import SQLGenerator
+from schema.er_generator import ERDiagramGenerator
 
 st.set_page_config(
     page_title="AI Database Schema Generator",
@@ -196,12 +197,17 @@ if generate:
                 sql_schema,
                 language="sql")
 
-                diagram_output.info(
-                        "ER Diagram generation will be added in a later step.")
+                diagram_path = (
+                    ERDiagramGenerator.generate(response))
+
+                diagram_output.image(
+                    diagram_path,
+                    use_container_width=True
+                )
 
             except Exception as e:
 
-                st.error(
+                st.error(s
                     f"Generation failed: {e}"
                 )
 # -----------------------------

@@ -73,5 +73,10 @@ class ERDiagramGenerator:
                 target,
                 label=rel_type
             )
-
-        return diagram
+        output_path = "er_diagram"
+        diagram.render(
+            output_path,
+            format="png",
+            cleanup=True
+        )
+        return output_path + ".png"
