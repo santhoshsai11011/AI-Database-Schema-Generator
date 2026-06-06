@@ -1,0 +1,13 @@
+venv/
+.env
+
+__pycache__/
+*.pyc
+
+outputs/
+vector_store/
+
+.idea/
+.vscode/
+
+.DS_Store
