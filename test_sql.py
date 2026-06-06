@@ -6,8 +6,7 @@ sample_schema = {
             "name": "Student",
             "attributes": [
                 "student_id",
-                "name",
-                "email"
+                "name"
             ],
             "primary_key": "student_id"
         },
@@ -15,9 +14,16 @@ sample_schema = {
             "name": "Course",
             "attributes": [
                 "course_id",
-                "course_name"
+                "title"
             ],
             "primary_key": "course_id"
+        }
+    ],
+    "relationships": [
+        {
+            "source": "Student",
+            "target": "Course",
+            "type": "many_to_many"
         }
     ]
 }
