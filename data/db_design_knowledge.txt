@@ -1,0 +1,305 @@
+DATABASE DESIGN FUNDAMENTALS
+
+A database schema should be designed using normalization principles to minimize redundancy and improve data integrity.
+
+----------------------------------------
+ENTITIES
+----------------------------------------
+
+An entity represents a real-world object, concept, or event.
+
+Examples:
+
+Student
+Course
+Employee
+Department
+Book
+Customer
+Order
+
+Each entity should become a database table.
+
+----------------------------------------
+ATTRIBUTES
+----------------------------------------
+
+Attributes describe properties of an entity.
+
+Examples:
+
+Student
+- student_id
+- name
+- email
+- date_of_birth
+
+Book
+- book_id
+- title
+- isbn
+- publication_year
+
+Attributes should be atomic and contain a single value.
+
+Avoid storing multiple values in a single column.
+
+Bad:
+phone_numbers
+
+Good:
+phone_number
+
+----------------------------------------
+PRIMARY KEYS
+----------------------------------------
+
+Every table should have a primary key.
+
+Characteristics:
+
+- Unique
+- Not Null
+- Stable
+- Minimal
+
+Examples:
+
+student_id
+employee_id
+book_id
+order_id
+
+Preferred naming:
+
+entity_name_id
+
+Examples:
+
+student_id
+customer_id
+department_id
+
+----------------------------------------
+FOREIGN KEYS
+----------------------------------------
+
+A foreign key establishes a relationship between two tables.
+
+Example:
+
+Student
+student_id
+
+Enrollment
+enrollment_id
+student_id
+
+Enrollment.student_id references Student.student_id
+
+----------------------------------------
+ONE TO ONE RELATIONSHIPS
+----------------------------------------
+
+One record in table A is associated with one record in table B.
+
+Example:
+
+Person
+Passport
+
+Implementation:
+
+Passport contains person_id as a unique foreign key.
+
+----------------------------------------
+ONE TO MANY RELATIONSHIPS
+----------------------------------------
+
+One record in table A is associated with many records in table B.
+
+Example:
+
+Department
+Employee
+
+Implementation:
+
+Employee contains department_id foreign key.
+
+----------------------------------------
+MANY TO MANY RELATIONSHIPS
+----------------------------------------
+
+Many records in table A are associated with many records in table B.
+
+Example:
+
+Student
+Course
+
+Implementation:
+
+Create a junction table.
+
+Enrollment
+
+Fields:
+
+enrollment_id
+student_id
+course_id
+
+----------------------------------------
+NORMALIZATION
+----------------------------------------
+
+FIRST NORMAL FORM (1NF)
+
+Rules:
+
+- No repeating groups
+- Atomic values only
+
+Bad:
+
+student_id
+phones
+
+Good:
+
+student_id
+phone
+
+----------------------------------------
+
+SECOND NORMAL FORM (2NF)
+
+Rules:
+
+- Must satisfy 1NF
+- No partial dependency
+
+Non-key attributes must depend on the entire primary key.
+
+----------------------------------------
+
+THIRD NORMAL FORM (3NF)
+
+Rules:
+
+- Must satisfy 2NF
+- No transitive dependency
+
+Bad:
+
+Student
+student_id
+department_id
+department_name
+
+Good:
+
+Student
+student_id
+department_id
+
+Department
+department_id
+department_name
+
+----------------------------------------
+NAMING CONVENTIONS
+----------------------------------------
+
+Use singular entity names.
+
+Good:
+
+Student
+Department
+Employee
+
+Avoid:
+
+Students
+Departments
+Employees
+
+Use snake_case for attributes.
+
+Examples:
+
+student_id
+date_of_birth
+created_at
+
+----------------------------------------
+COMMON SYSTEM PATTERNS
+----------------------------------------
+
+Library Management System
+
+Entities:
+
+Book
+Member
+Borrowing
+Author
+Category
+
+----------------------------------------
+
+Hospital Management System
+
+Entities:
+
+Patient
+Doctor
+Appointment
+Department
+Prescription
+
+----------------------------------------
+
+E-Commerce System
+
+Entities:
+
+Customer
+Product
+Order
+OrderItem
+Payment
+
+----------------------------------------
+
+University Management System
+
+Entities:
+
+Student
+Course
+Instructor
+Department
+Enrollment
+
+----------------------------------------
+SQL DESIGN BEST PRACTICES
+----------------------------------------
+
+Use integer primary keys.
+
+Use foreign key constraints.
+
+Avoid duplicate columns.
+
+Use meaningful table names.
+
+Store dates using DATE or DATETIME types.
+
+Apply NOT NULL where appropriate.
+
+Maintain referential integrity.
+
+Design for scalability and readability.
