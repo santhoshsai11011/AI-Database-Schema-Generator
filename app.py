@@ -202,12 +202,12 @@ if generate:
 
                 diagram_output.image(
                     diagram_path,
-                    use_container_width=True
+                    width=500
                 )
 
             except Exception as e:
 
-                st.error(s
+                st.error(
                     f"Generation failed: {e}"
                 )
 # -----------------------------
