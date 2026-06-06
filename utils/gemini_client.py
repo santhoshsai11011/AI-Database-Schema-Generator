@@ -17,27 +17,31 @@ class GeminiClient:
 
         genai.configure(api_key=api_key)
 
-        self.model = genai.GenerativeModel(
-            "gemini-2.5-flash"
-        )
+        self.model = genai.GenerativeModel("gemini-2.0-flash-lite")
 
-    def generate_schema_response(self, requirement: str):
-
+    def generate_schema_response(
+        self,
+        requirement: str,
+        context: str = ""
+    ):
         prompt = f"""
-You are an expert database architect.
+        You are an expert Database Architect.
 
-Analyze the following requirement and identify:
+Reference Context:
+{context}
+
+User Requirements:
+{requirement}
+
+Identify:
 
 1. Entities
 2. Attributes
 3. Primary Keys
-4. Relationships
+4. Foreign Keys
+5. Relationships
 
-Requirement:
-
-{requirement}
-
-Return the answer in a structured format.
+Return the result in a clear structured format.
 """
 
         response = self.model.generate_content(prompt)
