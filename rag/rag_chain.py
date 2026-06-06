@@ -1,5 +1,6 @@
 from rag.retriever import SchemaRetriever
 from utils.gemini_client import GeminiClient
+from schema.schema_parser import SchemaParser
 
 
 class RAGSchemaGenerator:
@@ -33,4 +34,10 @@ class RAGSchemaGenerator:
             )
         )
 
-        return response
+        schema_json = (
+            SchemaParser.parse(
+                response
+            )
+        )
+
+        return schema_json

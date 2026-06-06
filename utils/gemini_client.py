@@ -25,7 +25,7 @@ class GeminiClient:
         context: str = ""
     ):
         prompt = f"""
-        You are an expert Database Architect.
+You are an expert Database Architect.
 
 Reference Context:
 {context}
@@ -33,15 +33,34 @@ Reference Context:
 User Requirements:
 {requirement}
 
-Identify:
+Generate ONLY valid JSON.
 
-1. Entities
-2. Attributes
-3. Primary Keys
-4. Foreign Keys
-5. Relationships
+Output format:
 
-Return the result in a clear structured format.
+{{
+    "entities": [
+        {{
+            "name": "",
+            "attributes": [],
+            "primary_key": ""
+        }}
+    ],
+    "relationships": [
+        {{
+            "source": "",
+            "target": "",
+            "type": ""
+        }}
+    ]
+}}
+
+Rules:
+
+1. Return ONLY JSON.
+2. No markdown.
+3. No explanations.
+4. No code blocks.
+5. Ensure valid JSON syntax.
 """
 
         response = self.model.generate_content(prompt)

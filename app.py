@@ -184,7 +184,7 @@ if generate:
                     )
                 )
 
-                schema_output.markdown(response)
+                schema_output.json(response)
 
                 sql_output.info(
                     "SQL generation will be added in a later step."
