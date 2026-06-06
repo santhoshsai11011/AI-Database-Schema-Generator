@@ -1,4 +1,5 @@
 import streamlit as st
+from utils.gemini_client import GeminiClient
 
 st.set_page_config(
     page_title="AI Database Schema Generator",
@@ -58,6 +59,15 @@ section[data-testid="stSidebar"] {
 </style>
 """, unsafe_allow_html=True)
 
+#Gemini Client Initialization
+
+try:
+    gemini_client = GeminiClient()
+except Exception as e:
+    st.error(str(e))
+    st.stop()
+    
+    
 # -----------------------------
 # Sidebar
 # -----------------------------
@@ -148,51 +158,47 @@ st.subheader("ER Diagram")
 diagram_output = st.empty()
 
 # -----------------------------
-# Temporary Sample Output
+# Schema Generation
 # -----------------------------
 
 if generate:
 
-    schema_output.code(
-"""
-Entity: Book
+    if not user_input.strip():
 
-Attributes:
-- book_id (Primary Key)
-- title
-- author
-- isbn
+        st.warning(
+            "Please enter project requirements."
+        )
 
-Entity: Member
+    else:
 
-Attributes:
-- member_id (Primary Key)
-- name
-""",
-        language="text"
-    )
+        with st.spinner(
+            "Analyzing requirements..."
+        ):
 
-    sql_output.code(
-"""
-CREATE TABLE Book(
-    book_id INT PRIMARY KEY,
-    title VARCHAR(255),
-    author VARCHAR(255),
-    isbn VARCHAR(100)
-);
+            try:
 
-CREATE TABLE Member(
-    member_id INT PRIMARY KEY,
-    name VARCHAR(255)
-);
-""",
-        language="sql"
-    )
+                response = (
+                    gemini_client
+                    .generate_schema_response(
+                        user_input
+                    )
+                )
 
-    diagram_output.info(
-        "ER Diagram generation will be implemented in a later stage."
-    )
+                schema_output.markdown(response)
 
+                sql_output.info(
+                    "SQL generation will be added in a later step."
+                )
+
+                diagram_output.info(
+                    "ER Diagram generation will be added in a later step."
+                )
+
+            except Exception as e:
+
+                st.error(
+                    f"Generation failed: {e}"
+                )
 # -----------------------------
 # Footer
 # -----------------------------
